@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaFontPicker", "src\AvaloniaFontPicker.csproj", "{33AC968D-7159-4185-A28F-31AECA8F6EBD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AvaloniaFontPickerSample", "sample\AvaloniaFontPickerSample\AvaloniaFontPickerSample.csproj", "{D82F1378-348A-487A-B43B-01F400101BF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{33AC968D-7159-4185-A28F-31AECA8F6EBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33AC968D-7159-4185-A28F-31AECA8F6EBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33AC968D-7159-4185-A28F-31AECA8F6EBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D82F1378-348A-487A-B43B-01F400101BF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D82F1378-348A-487A-B43B-01F400101BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D82F1378-348A-487A-B43B-01F400101BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D82F1378-348A-487A-B43B-01F400101BF8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
