@@ -1,0 +1,63 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:color="clr-namespace:ThemeEditor.Controls.ColorPicker;assembly=ThemeEditor.Controls.ColorPicker"
+        mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
+        x:Class="AvaloniaFontPicker.MainDialog"
+        Title="Select Font">
+    <Window.Styles>
+        <Style Selector="Button.ControlButton">
+            <Setter Property="Width" Value="75"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style Selector="HeaderedContentControl">
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border>
+                            <Grid RowDefinitions="Auto,*">
+                                <ContentPresenter TextBlock.FontWeight="Bold" Content="{TemplateBinding Header}" />
+                                <Border Grid.Row="1"
+                                        BorderBrush="{TemplateBinding Background}"
+                                        BorderThickness="2"
+                                        CornerRadius="5"
+                                        Padding="5">
+                                    <ContentPresenter Content="{TemplateBinding Content}" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Styles>
+    
+    <Grid ColumnDefinitions="2*,2*,*" RowDefinitions="2*, *, *,50" Margin="5">
+        <HeaderedContentControl Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Header="Font" Background="Black">
+            <ListBox/>
+        </HeaderedContentControl>
+        <HeaderedContentControl Grid.Column="1" Grid.Row="0" Header="Font style" Background="Black">
+            <ListBox/>
+        </HeaderedContentControl>
+        <HeaderedContentControl Grid.Column="2" Grid.Row="0" Header="Font size" Background="Black">
+            <DockPanel LastChildFill="True">
+                <TextBox DockPanel.Dock="Bottom" Text="" Margin="0, 5, 0, 0"/>
+                <ListBox DockPanel.Dock="Top"/>
+            </DockPanel>
+        </HeaderedContentControl>
+        <HeaderedContentControl Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Header="Color" Background="Black">
+            <color:ColorPicker/>
+        </HeaderedContentControl>
+        <HeaderedContentControl Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Header="Sample text" Background="Black">
+            <TextBox Text="The quick brown fox jumps over the lazy dog"/>
+        </HeaderedContentControl>
+        <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+                <Button Classes="ControlButton" Content="Ok"/>
+                <Button Classes="ControlButton" Content="Cancel"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>
