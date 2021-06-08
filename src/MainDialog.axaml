@@ -5,7 +5,10 @@
         xmlns:color="clr-namespace:ThemeEditor.Controls.ColorPicker;assembly=ThemeEditor.Controls.ColorPicker"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
         x:Class="AvaloniaFontPicker.MainDialog"
-        Title="Select Font">
+        Title="Select Font"
+        Height="500"
+        Width="600"
+        CanResize="False">
     <Window.Styles>
         <Style Selector="Button.ControlButton">
             <Setter Property="Width" Value="75"/>

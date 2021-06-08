@@ -12,7 +12,7 @@ namespace AvaloniaFontPicker
         public FontDialog(Window owner, string dialogTitle , Font? defaultFont = null)
         {
             SelectedFont = defaultFont ?? new Font();
-            CreateAndShowDialog(owner, dialogTitle).Wait();
+            CreateAndShowDialog(owner, dialogTitle);
         }
 
         private async Task CreateAndShowDialog(Window owner, string title)
