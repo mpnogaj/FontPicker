@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,28 +14,23 @@ namespace AvaloniaFontPicker
 {
     public class MainDialog : Window, INotifyPropertyChanged
     {
-        private Font _currentFont;
-        private List<string> _installedFonts;
-        private List<string> _availableStyles;
-        private string _selectedFontFamily;
+        private Font _currentFont = new();
+        private List<string> _installedFonts = new();
+        private List<string> _availableStyles = new();
+        private string _selectedFontFamily = string.Empty;
         
         public MainDialog() : this(null) { }
 
         public MainDialog(Font? font)
         {
+            CurrentFont = font ?? new Font();
+            InstalledFonts = FontManager.Current.GetInstalledFontFamilyNames().ToList();
+            // Default font is always installed so it can't be null
+            SelectedFontFamily = InstalledFonts.Find(x => x == FontManager.Current.DefaultFontFamilyName)!;
+            UpdateTypefaces(SelectedFontFamily);
             InitializeComponent();
-            _currentFont = font ?? new Font();
-            _installedFonts = FontManager.Current.GetInstalledFontFamilyNames().ToList();
-            _selectedFontFamily = FontFamily.Default.Name;
-            var list = SKFontManager.Default.GetFontStyles("Arial");
-            _availableStyles = new List<string>();
-            foreach (var skFontStyle in list)
-            {
-                var skTypeface = list.CreateTypeface(skFontStyle);
-                var typeface = new Typeface(skTypeface.FamilyName, skTypeface.FontSlant.ToAvalonia(), (FontWeight) skTypeface.FontWeight);
-                _availableStyles.Add(TypefaceToString(typeface));
-            }
             DataContext = this;
+            
         }
 
         public Font CurrentFont
@@ -74,17 +70,34 @@ namespace AvaloniaFontPicker
             {
                 _selectedFontFamily = value;
                 OnPropertyChanged();
-                //Update font styles
-                var list = SKFontManager.Default.GetFontStyles(value);
-                var availableStyles = new List<string>();
-                foreach (var skFontStyle in list)
-                {
-                    var skTypeface = list.CreateTypeface(skFontStyle);
-                    var typeface = new Typeface(skTypeface.FamilyName, skTypeface.FontSlant.ToAvalonia(), (FontWeight) skTypeface.FontWeight);
-                    availableStyles.Add(TypefaceToString(typeface));
-                }
-                AvailableStyles = availableStyles;
+                UpdateTypefaces(value);
             }
+        }
+
+        private void UpdateTypefaces(string font)
+        {
+            var list = SKFontManager.Default.GetFontStyles(font);
+            var availableStyles = new List<string>();
+            foreach (var skFontStyle in list)
+            {
+                var skTypeface = list.CreateTypeface(skFontStyle);
+                var fontWeightNumber = skTypeface.FontWeight;
+                if(!Enum.IsDefined(typeof(FontWeight), fontWeightNumber)) RoundToHundreds(ref fontWeightNumber);
+                var fontWeight = (FontWeight) fontWeightNumber;
+                var typeface = new Typeface(skTypeface.FamilyName, skTypeface.FontSlant.ToAvalonia(), fontWeight);
+                availableStyles.Add(TypefaceToString(typeface));
+            }
+
+            AvailableStyles = availableStyles;
+        }
+
+        private void RoundToHundreds(ref int number)
+        {
+            // 250 -> 300
+            // 230 -> 200
+            // 270 -> 300
+            if ((number / 10) % 10 >= 5) number = ((number / 10) + 1) * 10;
+            else number = (number / 10) * 10;
         }
 
         private string TypefaceToString(Typeface t)
