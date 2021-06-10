@@ -1,3 +1,4 @@
+using System;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -24,6 +25,7 @@ namespace AvaloniaFontPickerSample
         private void Button_OnClick(object? sender, RoutedEventArgs e)
         {
             FontDialog a = new FontDialog(this);
+            Console.WriteLine("a");
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Avalonia.Controls;
 
@@ -19,6 +20,7 @@ namespace AvaloniaFontPicker
         {
             var dialog = new MainDialog(SelectedFont);
             await dialog.ShowDialog(owner);
+            Console.WriteLine("a");
         }
     }
 }

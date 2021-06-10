@@ -87,7 +87,73 @@ namespace AvaloniaFontPicker
             set
             {
                 _selectedFontSize = value;
-                OnPropertyChanged(value);
+                OnPropertyChanged();
+            }
+        }
+        
+        private byte _r = byte.MaxValue;
+        private byte _g = 13;
+        private byte _b = 8;
+        
+        public string Hex
+        {
+            get => ToHexString();
+            set
+            {
+                try
+                {
+                    Console.WriteLine($"Ustawiam kolor na: {value}");
+                    FromHexString(value, out _r, out _g, out _b);
+                    OnPropertyChanged(nameof(R));
+                    OnPropertyChanged(nameof(G));
+                    OnPropertyChanged(nameof(B));
+                }
+                catch (Exception)
+                {
+                    // ignored
+                }
+            }
+        }
+
+        public byte R
+        {
+            get => _r;
+            set
+            {
+                if (_r != value)
+                {
+                    _r = value;
+                    OnPropertyChanged(nameof(R));
+                }
+                OnPropertyChanged(nameof(Hex));
+            }
+        }
+        
+        public byte G
+        {
+            get => _g;
+            set
+            {
+                if (_g != value)
+                {
+                    _g = value;
+                    OnPropertyChanged(nameof(G));
+                }
+                OnPropertyChanged(nameof(Hex));
+            }
+        }
+        
+        public byte B
+        {
+            get => _b;
+            set
+            {
+                if (_b != value)
+                {
+                    _b = value;
+                    OnPropertyChanged(nameof(B));
+                }
+                OnPropertyChanged(nameof(Hex));
             }
         }
 
@@ -122,15 +188,35 @@ namespace AvaloniaFontPicker
             return $"{t.Weight}-{t.Style}";
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        private void FromHexString(string value, out byte r, out byte g, out byte b)
+        {
+            var color = Color.Parse(value);
+            //a = color.A;
+            r = color.R;
+            g = color.G;
+            b = color.B;
+        }
+        
+        private string ToHexString()
+        {
+            return $"#{ToUint32():X8}";
+        }
+        
+        private uint ToUint32()
+        {
+            return ((uint)R << 16) | ((uint)G << 8) | (uint)B;
+        }
+
+        public new event PropertyChangedEventHandler? PropertyChanged;
 
         private void InitializeComponent()
         {
             AvaloniaXamlLoader.Load(this);
         }
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
+            if (propertyName == null) throw new ArgumentNullException(nameof(propertyName));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
