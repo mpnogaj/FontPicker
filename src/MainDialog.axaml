@@ -6,7 +6,7 @@
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="450"
         x:Class="AvaloniaFontPicker.MainDialog"
         Title="Select Font"
-        Height="500"
+        Height="510"
         Width="600"
         CanResize="False">
     <Window.Styles>
@@ -46,8 +46,8 @@
         </HeaderedContentControl>
         <HeaderedContentControl Grid.Column="2" Grid.Row="0" Header="Font size" Background="Black">
             <DockPanel LastChildFill="True">
-                <TextBox DockPanel.Dock="Bottom" Text="" Margin="0, 5, 0, 0"/>
-                <ListBox DockPanel.Dock="Top"/>
+                <TextBox DockPanel.Dock="Bottom" Text="{Binding SelectedFontSize, Mode=TwoWay}" Margin="0, 5, 0, 0"/>
+                <ListBox Items="{Binding FontSizes}" SelectedItem="{Binding SelectedFontSize, Mode=TwoWay}" DockPanel.Dock="Top"/>
             </DockPanel>
         </HeaderedContentControl>
         <HeaderedContentControl Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Header="Color" Background="Black">

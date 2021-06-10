@@ -17,7 +17,9 @@ namespace AvaloniaFontPicker
         private Font _currentFont = new();
         private List<string> _installedFonts = new();
         private List<string> _availableStyles = new();
+        private readonly List<string> _fontSizes = new() {"8", "9", "10", "11", "12", "13", "14", "16", "18", "20", "24", "26", "28", "36", "48", "72"};
         private string _selectedFontFamily = string.Empty;
+        private string _selectedFontSize = string.Empty;
         
         public MainDialog() : this(null) { }
 
@@ -28,9 +30,9 @@ namespace AvaloniaFontPicker
             // Default font is always installed so it can't be null
             SelectedFontFamily = InstalledFonts.Find(x => x == FontManager.Current.DefaultFontFamilyName)!;
             UpdateTypefaces(SelectedFontFamily);
+            SelectedFontSize = _fontSizes[4];
             InitializeComponent();
             DataContext = this;
-            
         }
 
         public Font CurrentFont
@@ -71,6 +73,21 @@ namespace AvaloniaFontPicker
                 _selectedFontFamily = value;
                 OnPropertyChanged();
                 UpdateTypefaces(value);
+            }
+        }
+
+        public List<string> FontSizes
+        {
+            get => _fontSizes;
+        }
+
+        public string SelectedFontSize
+        {
+            get => _selectedFontSize;
+            set
+            {
+                _selectedFontSize = value;
+                OnPropertyChanged(value);
             }
         }
 
