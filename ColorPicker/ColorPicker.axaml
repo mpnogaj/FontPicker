@@ -10,7 +10,7 @@
     <Style Selector="colorPicker|ColorPicker">
         <Style.Resources>
             <colorPicker:HueToColorConverter x:Key="HueToColorConverter"/>
-            <colorPicker:HsvToColorConverter x:Key="HsvaToColorConverter"/>
+            <colorPicker:HsvaToColorConverter x:Key="HsvaToColorConverter"/>
         </Style.Resources>
         <Setter Property="Template">
             <ControlTemplate>
@@ -58,14 +58,14 @@
                         <TabControl Classes="picker">
                             <TabItem Header="Hex" Classes="picker">
                                 <Grid RowDefinitions="Auto" ColumnDefinitions="*" Classes="properties">
-                                    <TextBox Text="{Binding Hex, Mode=TwoWay}" ToolTip.Tip="Hex value" Classes="picker">
+                                    <TextBox IsReadOnly="True" Text="{Binding Hex, Mode=TwoWay}" ToolTip.Tip="Hex value" Classes="picker">
                                         <TextBox.DataContext>
                                             <colorPicker:HexProperties ColorPicker="{Binding RelativeSource={RelativeSource TemplatedParent}}"/>
                                         </TextBox.DataContext>
                                     </TextBox>
                                 </Grid>
                             </TabItem>
-                            <!--<TabItem Header="Alpha" Classes="picker">
+                            <TabItem Header="Alpha" Classes="picker" IsVisible="False">
                                 <Grid RowDefinitions="Auto" ColumnDefinitions="*" Classes="properties">
                                     <NumericUpDown Value="{Binding Alpha, Mode=TwoWay}" Minimum="0" Maximum="100" Increment="0.5" FormatString="{}{0:N2} %" Classes="picker">
                                         <NumericUpDown.DataContext>
@@ -73,7 +73,7 @@
                                         </NumericUpDown.DataContext>
                                     </NumericUpDown>
                                 </Grid>
-                            </TabItem>-->
+                            </TabItem>
                             <TabItem Header="RGB" Classes="picker">
                                 <Grid RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="Auto,*" Classes="properties">
                                     <Grid.DataContext>
@@ -188,7 +188,7 @@
                                     </VisualBrush.Visual>
                                 </VisualBrush>
                             </Grid.Background>
-                            <!--<Canvas x:Name="PART_AlphaCanvas" Height="20">
+                            <Canvas x:Name="PART_AlphaCanvas" Height="20" IsVisible="False">
                                 <Canvas.Background>
                                     <SolidColorBrush>
                                         <SolidColorBrush.Color>
@@ -210,7 +210,7 @@
                                         </ControlTemplate>
                                     </Thumb.Template>
                                 </Thumb>
-                            </Canvas>-->
+                            </Canvas>
                         </Grid>
                     </Grid>
                 </DockPanel>

@@ -9,9 +9,12 @@
         Title="Select Font"
         Height="510"
         Width="600"
-        CanResize="False">
+        CanResize="False"
+        WindowStartupLocation="CenterOwner"
+        ShowActivated="True">
     <Window.Resources>
-        <SolidColorBrush x:Key="TextForeground" Color="Black"/>
+        <converters:ColorToBrushConverter x:Key="ColorViewModelToBrushConverter"/>
+        <color:HexToColorConverter x:Key="HexToColorConverter"/>
     </Window.Resources>
     <Window.Styles>
         <Style Selector="Button.ControlButton">
@@ -46,7 +49,7 @@
             <ListBox Items="{Binding InstalledFonts}" SelectedItem="{Binding SelectedFontFamily}" />
         </HeaderedContentControl>
         <HeaderedContentControl Grid.Column="1" Grid.Row="0" Header="Font style" Background="Black">
-            <ListBox Items="{Binding AvailableStyles}" />
+            <ListBox Items="{Binding AvailableStyles}" SelectedIndex="{Binding SelectedStyleIndex}"/>
         </HeaderedContentControl>
         <HeaderedContentControl Grid.Column="2" Grid.Row="0" Header="Font size" Background="Black">
             <DockPanel LastChildFill="True">
@@ -57,20 +60,9 @@
         </HeaderedContentControl>
         <HeaderedContentControl Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Header="Color" Background="Black">
             <Grid RowDefinitions="Auto" ColumnDefinitions="*">
-                <Grid.Resources>
-                    <converters:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
-                    <color:HexToColorConverter x:Key="HexToColorConverter"/>
-                </Grid.Resources>
-                <Grid.Styles>
-                    <Style Selector="TextBlock.left">
-                        <Setter Property="TextAlignment" Value="Left"/>
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                        <Setter Property="Margin" Value="2"/>
-                    </Style>
-                </Grid.Styles>
-                <Grid Grid.Row="0" Grid.Column="0" Margin="2">
-                    <ToggleButton Name="PopupButton" BorderThickness="0" Background="Transparent" Padding="0"
-                                  Height="30" HorizontalAlignment="Stretch" VerticalAlignment="Top"
+                <Grid Grid.Row="0" Margin="2">
+                    <ToggleButton Name="PopupButton" BorderThickness="0" Padding="0" Height="30"
+                                  HorizontalAlignment="Stretch" VerticalAlignment="Top"
                                   HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                         <ToggleButton.Styles>
                             <Style Selector="ToggleButton">
@@ -82,42 +74,54 @@
                             </Style>
                             <Style
                                 Selector="ToggleButton:checked /template/ ContentPresenter, ToggleButton:pressed /template/ ContentPresenter">
-                                <Setter Property="Background" Value="{DynamicResource TextForeground}" />
+                                <Setter Property="Background">
+                                    <Setter.Value>
+                                        <MultiBinding Mode="OneWay"
+                                                      Converter="{StaticResource ColorViewModelToBrushConverter}">
+                                            <Binding Path="A" />
+                                            <Binding Path="R" />
+                                            <Binding Path="G" />
+                                            <Binding Path="B" />
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
                             </Style>
                             <Style Selector="ToggleButton:checked /template/ ContentPresenter">
-                                <Setter Property="BorderBrush" Value="Black" />
+                                <Setter Property="BorderBrush">
+                                    <Setter.Value>
+                                        <MultiBinding Mode="OneWay"
+                                                      Converter="{StaticResource ColorViewModelToBrushConverter}">
+                                            <Binding Path="A" />
+                                            <Binding Path="R" />
+                                            <Binding Path="G" />
+                                            <Binding Path="B" />
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
                             </Style>
                         </ToggleButton.Styles>
                         <Panel Height="30" DockPanel.Dock="Top">
-                            <Border BorderThickness="0" CornerRadius="0" Background="DarkGray" />
-                            <Border BorderThickness="0" CornerRadius="0"
-                                    Background="Gray" />
-                            <!--<Border BorderThickness="0" CornerRadius="0">
+                            <Border BorderThickness="0" CornerRadius="0" />
+                            <Border BorderThickness="0" CornerRadius="0" />
+                            <Border BorderThickness="0" CornerRadius="0">
                                 <Border.Background>
                                     <MultiBinding Mode="OneWay"
-                                                  Converter="{StaticResource ColorToBrushConverter}">
+                                                  Converter="{StaticResource ColorViewModelToBrushConverter}">
+                                        <Binding Path="A" />
                                         <Binding Path="R" />
                                         <Binding Path="G" />
                                         <Binding Path="B" />
                                     </MultiBinding>
                                 </Border.Background>
-                            </Border>-->
+                            </Border>
                         </Panel>
                     </ToggleButton>
                     <Popup IsOpen="{Binding #PopupButton.IsChecked, Mode=TwoWay}" IsLightDismissEnabled="True"
-                           PlacementMode="AnchorAndGravity" PlacementGravity="Bottom" PlacementAnchor="TopRight">
-                        <Border Background="{DynamicResource SystemChromeMediumColor}" CornerRadius="0">
-                            <Border.Styles>
-                                <Style Selector="color|ColorPicker.picker">
-                                    <Setter Property="IsVisible" Value="False"/>
-                                </Style>
-                            </Border.Styles>
+                           PlacementMode="Pointer">
+                        <Border Background="LightGray" CornerRadius="0">
                             <color:ColorPicker
-                                Value1="{Binding R, Mode=TwoWay}"
-                                Value2="{Binding G, Mode=TwoWay}"
-                                Value3="{Binding B, Mode=TwoWay}"
-                                Margin="8" 
-                            />
+                                Color="{Binding Hex, Mode=TwoWay, Converter={StaticResource HexToColorConverter}}"
+                                Margin="8" />
                         </Border>
                     </Popup>
                 </Grid>
@@ -125,12 +129,24 @@
         </HeaderedContentControl>
         <HeaderedContentControl Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Header="Sample text"
                                 Background="Black">
-            <TextBox Text="The quick brown fox jumps over the lazy dog" />
+            <TextBox Text="The quick brown fox jumps over the lazy dog"
+                     FontSize="{Binding SelectedFontSize}"
+                     Name="PreviewBox"
+                     TextWrapping="Wrap">
+                <TextBox.Foreground>
+                    <MultiBinding Mode="OneWay" Converter="{StaticResource ColorViewModelToBrushConverter}">
+                        <Binding Path="A" />
+                        <Binding Path="R" />
+                        <Binding Path="G" />
+                        <Binding Path="B" />
+                    </MultiBinding>
+                </TextBox.Foreground>
+            </TextBox>
         </HeaderedContentControl>
         <Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
-                <Button Classes="ControlButton" Content="Ok" />
-                <Button Classes="ControlButton" Content="Cancel" />
+                <Button Classes="ControlButton" Content="Ok" Click="SaveChanges" />
+                <Button Classes="ControlButton" Content="Cancel" Click="Cancel" Margin="0, 0, 5, 0" />
             </StackPanel>
         </Grid>
     </Grid>

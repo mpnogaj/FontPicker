@@ -5,5 +5,8 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="AvaloniaFontPickerSample.MainWindow"
         Title="AvaloniaFontPickerSample">
-    <Button Click="Button_OnClick" Content="Open dialog"/>
+    <StackPanel Spacing="10" Margin="5">
+        <TextBox Name="SampleBox" HorizontalContentAlignment="Center" Text="The quick brown fox jumps over the lazy dog"/>
+        <Button HorizontalAlignment="Center" Click="Button_OnClick" Content="Open dialog"/>
+    </StackPanel>
 </Window>

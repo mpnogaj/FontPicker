@@ -8,6 +8,6 @@ namespace AvaloniaFontPicker
         public FontWeight FontWeight { get; set; } = FontWeight.Normal;
         public FontStyle FontStyle { get; set; } = FontStyle.Normal;
         public double FontSize { get; set; } = 12.0;
-        public SolidColorBrush Foreground = new SolidColorBrush(Colors.Black);
+        public SolidColorBrush Foreground { get; set; } = new(Colors.Black);
     }
 }

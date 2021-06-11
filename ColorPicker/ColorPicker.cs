@@ -19,12 +19,18 @@ namespace ColorPicker
 
         public static bool IsValidHexColor(string hex)
         {
-            return !string.IsNullOrWhiteSpace(hex) && s_hexRegex.Match(hex).Success;
+            string withoutAlpha = hex;
+            // Delete alpha
+            if (hex.Length == 9)
+            {
+                withoutAlpha = hex.Substring(3);
+                withoutAlpha = '#' + withoutAlpha;
+            }
+            return !string.IsNullOrWhiteSpace(hex) && s_hexRegex.Match(withoutAlpha).Success;
         }
 
         public static string ToHexColor(Color color)
         {
-            // Skip alpha
             return $"#{color.ToUint32().ToString("X8").Substring(2)}";
         }
 
@@ -42,18 +48,17 @@ namespace ColorPicker
             a = color.A * 100.0 / 255.0;
         }
 
-        public static Color FromHSV(double h, double s, double v)
+        public static Color FromHSVA(double h, double s, double v, double a)
         {
             RGB rgb = new HSV(h, s, v).ToRGB();
-            //byte A = (byte)(a * 255.0 / 100.0);
-            // Alpha is still here but it's always max value.
-            return new Color(byte.MaxValue, (byte)rgb.R, (byte)rgb.G, (byte)rgb.B);
+            byte A = (byte)(a * 255.0 / 100.0);
+            return new Color(A, (byte)rgb.R, (byte)rgb.G, (byte)rgb.B);
         }
 
-        public static Color FromRGB(byte r, byte g, byte b, double a)
+        public static Color FromRGBA(byte r, byte g, byte b, double a)
         {
-            //byte A = (byte)(a * 255.0 / 100.0);
-            return new Color(byte.MaxValue, r, g, b);
+            byte A = (byte)(a * 255.0 / 100.0);
+            return new Color(A, r, g, b);
         }
     }
 
@@ -179,14 +184,14 @@ namespace ColorPicker
         }
     }
 
-    public class HsvToColorConverter : IMultiValueConverter
+    public class HsvaToColorConverter : IMultiValueConverter
     {
         public object Convert(IList<object> values, Type targetType, object parameter, CultureInfo culture)
         {
             double[] v = values.OfType<double>().ToArray();
             if (v.Length == values.Count)
             {
-                return ColorHelpers.FromHSV(v[0], v[1], v[2]);
+                return ColorHelpers.FromHSVA(v[0], v[1], v[2], v[3]);
             }
             return AvaloniaProperty.UnsetValue;
         }
@@ -198,7 +203,7 @@ namespace ColorPicker
         {
             if (value is double h && targetType == typeof(Color))
             {
-                return ColorHelpers.FromHSV(h, 100, 100);
+                return ColorHelpers.FromHSVA(h, 100, 100, 100);
             }
             return AvaloniaProperty.UnsetValue;
         }
@@ -251,7 +256,7 @@ namespace ColorPicker
                 ColorPicker.GetObservable(ColorPicker.Value1Property).Subscribe(x => UpdatePropertyValues());
                 ColorPicker.GetObservable(ColorPicker.Value2Property).Subscribe(x => UpdatePropertyValues());
                 ColorPicker.GetObservable(ColorPicker.Value3Property).Subscribe(x => UpdatePropertyValues());
-                //ColorPicker.GetObservable(ColorPicker.Value4Property).Subscribe(x => UpdatePropertyValues());
+                ColorPicker.GetObservable(ColorPicker.Value4Property).Subscribe(x => UpdatePropertyValues());
             }
         }
     }
@@ -557,7 +562,7 @@ namespace ColorPicker
     public class HexProperties : ColorPickerProperties
     {
         public static readonly StyledProperty<string> HexProperty =
-            AvaloniaProperty.Register<HexProperties, string>(nameof(Hex), "#FF0000", validate: ValidateHex);
+            AvaloniaProperty.Register<HexProperties, string>(nameof(Hex), "#FFFF0000", validate: ValidateHex);
 
         private static bool ValidateHex(string hex)
         {
@@ -591,7 +596,7 @@ namespace ColorPicker
                 ColorPicker.Value1 = h;
                 ColorPicker.Value2 = s;
                 ColorPicker.Value3 = v;
-                //ColorPicker.Value4 = a;
+                ColorPicker.Value4 = a;
                 _updating = false;
             }
         }
@@ -601,14 +606,14 @@ namespace ColorPicker
             if (_updating == false && ColorPicker != null)
             {
                 _updating = true;
-                var color = ColorHelpers.FromHSV(ColorPicker.Value1, ColorPicker.Value2, ColorPicker.Value3);
+                var color = ColorHelpers.FromHSVA(ColorPicker.Value1, ColorPicker.Value2, ColorPicker.Value3, ColorPicker.Value4);
                 Hex = ColorHelpers.ToHexColor(color);
                 _updating = false;
             }
         }
     }
 
-    /*public class AlphaProperties : ColorPickerProperties
+    public class AlphaProperties : ColorPickerProperties
     {
         public static readonly StyledProperty<double> AlphaProperty =
             AvaloniaProperty.Register<AlphaProperties, double>(nameof(Alpha), 100.0, validate: ValidateAlpha);
@@ -654,7 +659,7 @@ namespace ColorPicker
                 _updating = false;
             }
         }
-    }*/
+    }
 
     public interface IValueConverters
     {
@@ -686,8 +691,8 @@ namespace ColorPicker
         public static readonly StyledProperty<double> Value3Property =
             AvaloniaProperty.Register<ColorPicker, double>(nameof(Value3));
 
-        /*public static readonly StyledProperty<double> Value4Property =
-            AvaloniaProperty.Register<ColorPicker, double>(nameof(Value4));*/
+        public static readonly StyledProperty<double> Value4Property =
+            AvaloniaProperty.Register<ColorPicker, double>(nameof(Value4));
 
         public static readonly StyledProperty<Color> ColorProperty =
             AvaloniaProperty.Register<ColorPicker, Color>(nameof(Color));
@@ -696,8 +701,8 @@ namespace ColorPicker
         private Thumb? _colorThumb;
         private Canvas? _hueCanvas;
         private Thumb? _hueThumb;
-        /*private Canvas? _alphaCanvas;
-        private Thumb? _alphaThumb;*/
+        private Canvas? _alphaCanvas;
+        private Thumb? _alphaThumb;
         private bool _updating = false;
         private bool _captured = false;
         private readonly IValueConverters _converters = new HsvValueConverters();
@@ -707,7 +712,7 @@ namespace ColorPicker
             this.GetObservable(Value1Property).Subscribe(x => OnValueChange());
             this.GetObservable(Value2Property).Subscribe(x => OnValueChange());
             this.GetObservable(Value3Property).Subscribe(x => OnValueChange());
-            //this.GetObservable(Value4Property).Subscribe(x => OnValueChange());
+            this.GetObservable(Value4Property).Subscribe(x => OnValueChange());
             this.GetObservable(ColorProperty).Subscribe(x => OnColorChange());
         }
 
@@ -729,11 +734,11 @@ namespace ColorPicker
             set { SetValue(Value3Property, value); }
         }
 
-        /*public double Value4
+        public double Value4
         {
             get { return GetValue(Value4Property); }
             set { SetValue(Value4Property, value); }
-        }*/
+        }
 
         public Color Color
         {
@@ -767,7 +772,7 @@ namespace ColorPicker
                 _hueThumb.DragDelta -= HueThumb_DragDelta;
             }
 
-            /*if (_alphaCanvas != null)
+            if (_alphaCanvas != null)
             {
                 _alphaCanvas.PointerPressed -= AlphaCanvas_PointerPressed;
                 _alphaCanvas.PointerReleased -= AlphaCanvas_PointerReleased;
@@ -777,14 +782,14 @@ namespace ColorPicker
             if (_alphaThumb != null)
             {
                 _alphaThumb.DragDelta -= AlphaThumb_DragDelta;
-            }*/
+            }
 
             _colorCanvas = e.NameScope.Find<Canvas>("PART_ColorCanvas");
             _colorThumb = e.NameScope.Find<Thumb>("PART_ColorThumb");
             _hueCanvas = e.NameScope.Find<Canvas>("PART_HueCanvas");
             _hueThumb = e.NameScope.Find<Thumb>("PART_HueThumb");
-            /*_alphaCanvas = e.NameScope.Find<Canvas>("PART_AlphaCanvas");
-            _alphaThumb = e.NameScope.Find<Thumb>("PART_AlphaThumb");*/
+            _alphaCanvas = e.NameScope.Find<Canvas>("PART_AlphaCanvas");
+            _alphaThumb = e.NameScope.Find<Thumb>("PART_AlphaThumb");
 
             if (_colorCanvas != null)
             {
@@ -810,7 +815,6 @@ namespace ColorPicker
                 _hueThumb.DragDelta += HueThumb_DragDelta;
             }
 
-            /*
             if (_alphaCanvas != null)
             {
                 _alphaCanvas.PointerPressed += AlphaCanvas_PointerPressed;
@@ -821,7 +825,7 @@ namespace ColorPicker
             if (_alphaThumb != null)
             {
                 _alphaThumb.DragDelta += AlphaThumb_DragDelta;
-            }*/
+            }
         }
 
         protected override Size ArrangeOverride(Size finalSize)
@@ -834,11 +838,11 @@ namespace ColorPicker
         private bool IsTemplateValid()
         {
             return _colorCanvas != null
-                   && _colorThumb != null
-                   && _hueCanvas != null
-                   && _hueThumb != null;
-            /*&& _alphaCanvas != null
-            && _alphaThumb != null;*/
+                && _colorThumb != null
+                && _hueCanvas != null
+                && _hueThumb != null
+                && _alphaCanvas != null
+                && _alphaThumb != null;
         }
 
         private double Clamp(double val, double min, double max)
@@ -873,7 +877,7 @@ namespace ColorPicker
 
         private double GetValue3Range() => _colorCanvas?.Bounds.Height ?? 0.0;
 
-        /*private double GetValue4Range() => _alphaCanvas?.Bounds.Width ?? 0.0;*/
+        private double GetValue4Range() => _alphaCanvas?.Bounds.Width ?? 0.0;
 
         private void UpdateThumbsFromColor()
         {
@@ -881,10 +885,10 @@ namespace ColorPicker
             double hueY = Convert(_converters.Value1Converter, h, GetValue1Range());
             double colorX = Convert(_converters.Value2Converter, s, GetValue2Range());
             double colorY = Convert(_converters.Value3Converter, v, GetValue3Range());
-            //double alphaX = Convert(_converters.Value4Converter, a, GetValue4Range());
+            double alphaX = Convert(_converters.Value4Converter, a, GetValue4Range());
             MoveThumb(_hueCanvas, _hueThumb, 0, hueY);
             MoveThumb(_colorCanvas, _colorThumb, colorX, colorY);
-            //MoveThumb(_alphaCanvas, _alphaThumb, alphaX, 0);
+            MoveThumb(_alphaCanvas, _alphaThumb, alphaX, 0);
         }
 
         private void UpdateThumbsFromValues()
@@ -892,10 +896,10 @@ namespace ColorPicker
             double hueY = Convert(_converters.Value1Converter, Value1, GetValue1Range());
             double colorX = Convert(_converters.Value2Converter, Value2, GetValue2Range());
             double colorY = Convert(_converters.Value3Converter, Value3, GetValue3Range());
-            //double alphaX = Convert(_converters.Value4Converter, Value4, GetValue4Range());
+            double alphaX = Convert(_converters.Value4Converter, Value4, GetValue4Range());
             MoveThumb(_hueCanvas, _hueThumb, 0, hueY);
             MoveThumb(_colorCanvas, _colorThumb, colorX, colorY);
-            //MoveThumb(_alphaCanvas, _alphaThumb, alphaX, 0);
+            MoveThumb(_alphaCanvas, _alphaThumb, alphaX, 0);
         }
 
         private void UpdateValuesFromThumbs()
@@ -903,12 +907,12 @@ namespace ColorPicker
             double hueY = Canvas.GetTop(_hueThumb);
             double colorX = Canvas.GetLeft(_colorThumb);
             double colorY = Canvas.GetTop(_colorThumb);
-            //double alphaX = Canvas.GetLeft(_alphaThumb);
+            double alphaX = Canvas.GetLeft(_alphaThumb);
             Value1 = ConvertBack(_converters.Value1Converter, hueY, GetValue1Range());
             Value2 = ConvertBack(_converters.Value2Converter, colorX, GetValue2Range());
             Value3 = ConvertBack(_converters.Value3Converter, colorY, GetValue3Range());
-            //Value4 = ConvertBack(_converters.Value4Converter, alphaX, GetValue4Range());
-            Color = ColorHelpers.FromHSV(Value1, Value2, Value3);
+            Value4 = ConvertBack(_converters.Value4Converter, alphaX, GetValue4Range());
+            Color = ColorHelpers.FromHSVA(Value1, Value2, Value3, Value4);
         }
 
         private void UpdateColorFromThumbs()
@@ -916,12 +920,12 @@ namespace ColorPicker
             double hueY = Canvas.GetTop(_hueThumb);
             double colorX = Canvas.GetLeft(_colorThumb);
             double colorY = Canvas.GetTop(_colorThumb);
-            //double alphaX = Canvas.GetLeft(_alphaThumb);
+            double alphaX = Canvas.GetLeft(_alphaThumb);
             double h = ConvertBack(_converters.Value1Converter, hueY, GetValue1Range());
             double s = ConvertBack(_converters.Value2Converter, colorX, GetValue2Range());
             double v = ConvertBack(_converters.Value3Converter, colorY, GetValue3Range());
-            //double a = ConvertBack(_converters.Value4Converter, alphaX, GetValue4Range());
-            Color = ColorHelpers.FromHSV(h, s, v);
+            double a = ConvertBack(_converters.Value4Converter, alphaX, GetValue4Range());
+            Color = ColorHelpers.FromHSVA(h, s, v, a);
         }
 
         private void OnValueChange()
@@ -1033,7 +1037,7 @@ namespace ColorPicker
             _updating = false;
         }
 
-        /*private void AlphaCanvas_PointerPressed(object? sender, PointerPressedEventArgs e)
+        private void AlphaCanvas_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             var position = e.GetPosition(_alphaCanvas);
             _updating = true;
@@ -1073,6 +1077,6 @@ namespace ColorPicker
             UpdateValuesFromThumbs();
             UpdateColorFromThumbs();
             _updating = false;
-        }*/
+        }
     }
 }

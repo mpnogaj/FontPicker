@@ -6,21 +6,22 @@ namespace AvaloniaFontPicker
 {
     public class FontDialog
     {
-        public Font SelectedFont { get; private set; }
+        private Font SelectedFont { get; set; }
         
-        public FontDialog(Window owner, Font? defaultFont = null) : this(owner, "Select Font", defaultFont){}
-
-        public FontDialog(Window owner, string dialogTitle , Font? defaultFont = null)
+        public FontDialog(Font? defaultFont = null)
         {
             SelectedFont = defaultFont ?? new Font();
-            CreateAndShowDialog(owner, dialogTitle);
         }
 
-        private async Task CreateAndShowDialog(Window owner, string title)
+        public async Task Show(Window owner, Action<Font> callback, string title = "Select font")
         {
             var dialog = new MainDialog(SelectedFont);
             await dialog.ShowDialog(owner);
-            Console.WriteLine("a");
+            if (dialog.ShouldSaveChanges) 
+            { 
+                SelectedFont = dialog.CurrentFont;
+                callback(SelectedFont);
+            }
         }
     }
 }
