@@ -15,8 +15,11 @@ namespace AvaloniaFontPicker
 
         public async Task Show(Window owner, Action<Font> callback, string title = "Select font")
         {
-            var dialog = new MainDialog(SelectedFont);
-            await dialog.ShowDialog(owner);
+			var dialog = new MainDialog(SelectedFont)
+			{
+				Title = title
+			};
+			await dialog.ShowDialog(owner);
             if (dialog.ShouldSaveChanges) 
             { 
                 SelectedFont = dialog.CurrentFont;

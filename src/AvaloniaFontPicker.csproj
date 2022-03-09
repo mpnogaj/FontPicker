@@ -1,15 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
+        <PackageId>FontPickerAvalonia</PackageId>
+        <Authors>mpnogaj</Authors>
+        <Product>FontPickerAvalonia</Product>
+        <PackageTags>avalonia;font-picker;font;picker</PackageTags>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.6" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.6" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.6" />
-        <!--<PackageReference Include="ThemeEditor.Controls.ColorPicker" Version="0.10.4" />-->
-    </ItemGroup>
-    <ItemGroup>
-      <ProjectReference Include="..\ColorPicker\ColorPicker.csproj" />
+        <PackageReference Include="Avalonia" Version="0.10.11" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.11" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.11" />
+        <PackageReference Include="ColorPickerAvalonia" Version="1.0.0" />
     </ItemGroup>
 </Project>

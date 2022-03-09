@@ -12,7 +12,7 @@ namespace AvaloniaFontPicker
     {
         public object Convert(IList<object>? values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values != null && values.Count() == 4)
+            if (values != null && values.Count == 4)
             {
                 for (int i = 0; i < 4; i++)
                 {

@@ -125,9 +125,19 @@ namespace AvaloniaFontPicker
             get => _selectedStyleIndex;
             set
             {
-                _selectedStyleIndex = value;
-                _previewBox.FontStyle = _availableStylesObj[value].FontStyle;
-                _previewBox.FontWeight = _availableStylesObj[value].FontWeight;
+                value = Math.Max(0, value);
+                try
+                {
+                    _selectedStyleIndex = value;
+                    _previewBox.FontStyle = _availableStylesObj[value].FontStyle;
+                    _previewBox.FontWeight = _availableStylesObj[value].FontWeight;
+                }
+                catch(IndexOutOfRangeException)
+				{
+                    _selectedStyleIndex = 0;
+                    _previewBox.FontStyle = _availableStylesObj[0].FontStyle;
+                    _previewBox.FontWeight = _availableStylesObj[0].FontWeight;
+                }
                 OnPropertyChanged();
             }
         }
@@ -139,7 +149,7 @@ namespace AvaloniaFontPicker
             {
                 try
                 {
-                    FromHexString(value, out _a, out _r, out _g, out _b);
+					FromHexString(value, out _a, out _r, out _g, out _b);
                     OnPropertyChanged(nameof(A));
                     OnPropertyChanged(nameof(R));
                     OnPropertyChanged(nameof(G));
@@ -229,13 +239,13 @@ namespace AvaloniaFontPicker
                 availableStyles.Add(TypefaceToString(typeface));
                 availableStylesObj.Add(new FontStyleWeight(typeface.Style, typeface.Weight));
             }
-
+            
             AvailableStyles = availableStyles;
             _availableStylesObj = availableStylesObj;
             SelectedStyleIndex = 0;
         }
 
-        private void RoundToHundreds(ref int number)
+        private static void RoundToHundreds(ref int number)
         {
             // 250 -> 300
             // 230 -> 200
@@ -244,12 +254,12 @@ namespace AvaloniaFontPicker
             else number = number / 10 * 10;
         }
 
-        private string TypefaceToString(Typeface t)
+        private static string TypefaceToString(Typeface t)
         {
             return $"{t.Weight}-{t.Style}";
         }
 
-        private void FromHexString(string value, out byte a, out byte r, out byte g, out byte b)
+        private static void FromHexString(string value, out byte a, out byte r, out byte g, out byte b)
         {
             var color = Color.Parse(value);
             a = color.A;

@@ -2,7 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:color="clr-namespace:ColorPicker;assembly=ColorPicker"
+        xmlns:color="clr-namespace:AvaloniaColorPicker;assembly=AvaloniaColorPicker"
         xmlns:converters="clr-namespace:AvaloniaFontPicker"
         mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="500"
         x:Class="AvaloniaFontPicker.MainDialog"
