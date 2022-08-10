@@ -3,6 +3,6 @@
              x:Class="AvaloniaFontPickerSample.App">
     <Application.Styles>
         <FluentTheme Mode="Light"/>
-        <StyleInclude Source="avares://AvaloniaColorPicker/ColorPicker.axaml"/>
+        <StyleInclude Source="avares://ThemeEditor.Controls.ColorPicker/ColorPicker.axaml"/>
     </Application.Styles>
 </Application>

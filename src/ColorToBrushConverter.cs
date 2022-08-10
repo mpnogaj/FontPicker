@@ -1,38 +1,22 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using Avalonia;
 using Avalonia.Data.Converters;
 using Avalonia.Media;
+using System;
+using System.Globalization;
 
 namespace AvaloniaFontPicker
 {
-    public class ColorToBrushConverter : IMultiValueConverter
-    {
-        public object Convert(IList<object>? values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (values != null && values.Count == 4)
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    if (values[i].GetType() != typeof(byte))
-                    {
-                        return AvaloniaProperty.UnsetValue;
-                    }
-                }
+	public class ColorToBrushConverter : IValueConverter
+	{
+		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+		{
+			var color = (Color)(value ?? throw new ArgumentNullException(nameof(value)));
+			return new SolidColorBrush(color);
+		}
 
-                var color = Color.FromArgb(
-                    (byte)values[0],
-                    (byte)values[1],
-                    (byte)values[2],
-                    (byte)values[3]);
-                
-                if(color != Color.FromArgb(0, 0, 0, 0)) Console.WriteLine("a");
-
-                return new SolidColorBrush(color);
-            }
-            return AvaloniaProperty.UnsetValue;
-        }
-    }
+		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+		{
+			var brush = (SolidColorBrush)(value ?? throw new ArgumentNullException(nameof(value)));
+			return brush.Color;
+		}
+	}
 }
