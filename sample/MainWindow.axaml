@@ -6,7 +6,7 @@
         x:Class="AvaloniaFontPickerSample.MainWindow"
         Title="AvaloniaFontPickerSample">
     <StackPanel Spacing="10" Margin="5">
-        <TextBox Name="SampleBox" HorizontalContentAlignment="Center" Text="The quick brown fox jumps over the lazy dog"/>
+        <TextBox x:Name="SampleBox" HorizontalContentAlignment="Center" Text="The quick brown fox jumps over the lazy dog"/>
         <Button HorizontalAlignment="Center" Click="Button_OnClick" Content="Open dialog"/>
     </StackPanel>
 </Window>

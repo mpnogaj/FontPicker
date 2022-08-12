@@ -1,0 +1,142 @@
+<Window xmlns="https://github.com/avaloniaui"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:AvaloniaFontPicker"
+		xmlns:colorPicker="clr-namespace:ThemeEditor.Controls.ColorPicker;assembly=ThemeEditor.Controls.ColorPicker"
+		mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="500"
+		x:Class="AvaloniaFontPicker.Dialog"
+		x:DataType="local:Dialog"
+		Title="Select Font"
+		Height="510"
+		Width="600"
+		CanResize="False"
+		WindowStartupLocation="CenterOwner"
+		ShowActivated="True">
+	<Window.Resources>
+		<local:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+		<local:StringToFontFamilyConverter x:Key="StringToFontFamilyConverter"/>
+	</Window.Resources>
+
+	<Window.Styles>
+		<Style Selector="Button.ControlButton">
+			<Setter Property="Width" Value="75" />
+			<Setter Property="HorizontalContentAlignment" Value="Center" />
+		</Style>
+		<Style Selector="HeaderedContentControl">
+			<Setter Property="Margin" Value="5" />
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate>
+						<Border>
+							<Grid RowDefinitions="Auto,*">
+								<ContentPresenter TextBlock.FontWeight="Bold" 
+								                  Content="{TemplateBinding Header}" />
+								<Border Grid.Row="1"
+										BorderBrush="{TemplateBinding Background}"
+										BorderThickness="2"
+										CornerRadius="5"
+										Padding="5">
+									<ContentPresenter Content="{TemplateBinding Content}" />
+								</Border>
+							</Grid>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Styles>
+
+	<Grid ColumnDefinitions="2*,2*,*" 
+	      RowDefinitions="3*, *, 2*,50" 
+	      Margin="5">
+		<HeaderedContentControl Grid.Column="0" 
+		                        Grid.Row="0" 
+		                        Grid.RowSpan="3" 
+		                        Header="Font" 
+		                        Background="Black">
+			<ListBox Items="{CompiledBinding InstalledFonts}" 
+			         SelectedItem="{CompiledBinding SelectedFontFamily}" />
+		</HeaderedContentControl>
+		<HeaderedContentControl Grid.Column="1" 
+		                        Grid.Row="0" 
+		                        Header="Font style" 
+		                        Background="Black">
+			<ListBox Items="{CompiledBinding AvailableStyles}" 
+					 SelectedItem="{CompiledBinding SelectedFontWeightStyle, Mode=TwoWay}"/>
+		</HeaderedContentControl>
+		<HeaderedContentControl Grid.Column="2" 
+		                        Grid.Row="0" 
+		                        Header="Font size" 
+		                        Background="Black">
+			<DockPanel LastChildFill="True">
+				<TextBox DockPanel.Dock="Bottom" 
+				         Text="{CompiledBinding SelectedFontSize, Mode=TwoWay}" 
+				         Margin="0, 5, 0, 0" />
+				<ListBox SelectionMode="Single" 
+				         Items="{Binding FontSizes}"
+						 SelectedItem="{CompiledBinding SelectedFontSize, Mode=TwoWay}" DockPanel.Dock="Top" />
+			</DockPanel>
+		</HeaderedContentControl>
+		<HeaderedContentControl Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Header="Color" Background="Black">
+			<Grid RowDefinitions="Auto" ColumnDefinitions="*">
+				<Grid Grid.Row="0" Margin="2">
+					<ToggleButton Name="PopupButton" BorderThickness="0" Padding="0" Height="30"
+								  HorizontalAlignment="Stretch" VerticalAlignment="Top"
+								  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+						<ToggleButton.Styles>
+							<Style Selector="ToggleButton">
+								<Setter Property="RenderTransform" Value="none" />
+								<Setter Property="Transitions" Value="{x:Null}" />
+							</Style>
+							<Style Selector="ToggleButton:pressed">
+								<Setter Property="RenderTransform" Value="none" />
+							</Style>
+							<Style
+								Selector="ToggleButton:checked /template/ ContentPresenter, ToggleButton:pressed /template/ ContentPresenter">
+								<Setter Property="Background"
+										Value="{CompiledBinding SelectedForeground, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
+							</Style>
+							<Style Selector="ToggleButton:checked /template/ ContentPresenter">
+								<Setter Property="BorderBrush"
+										Value="{CompiledBinding SelectedForeground, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
+							</Style>
+						</ToggleButton.Styles>
+						<Panel Height="30" DockPanel.Dock="Top">
+							<Border BorderThickness="0" CornerRadius="0" />
+							<Border BorderThickness="0" CornerRadius="0" />
+							<Border BorderThickness="0" CornerRadius="0" 
+									Background="{CompiledBinding SelectedForeground, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
+						</Panel>
+					</ToggleButton>
+					<Popup IsOpen="{Binding #PopupButton.IsChecked, Mode=TwoWay}" IsLightDismissEnabled="True"
+						   PlacementMode="Pointer">
+						<Border Background="LightGray" CornerRadius="0">
+							<colorPicker:ColorPicker
+								Color="{CompiledBinding SelectedForeground, Mode=TwoWay}"
+								Margin="8" />
+						</Border>
+					</Popup>
+				</Grid>
+			</Grid>
+		</HeaderedContentControl>
+		<HeaderedContentControl Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Header="Sample text"
+								Background="Black">
+			<TextBox Text="{CompiledBinding ShowcaseString, Mode=OneWay}"
+					 Name="PreviewBox"
+					 TextWrapping="Wrap"
+					 FontSize="{CompiledBinding SelectedFontSize, Mode=OneWay}"
+					 FontWeight="{CompiledBinding SelectedFontWeightStyle.FontWeight, Mode=OneWay}"
+					 FontStyle="{CompiledBinding SelectedFontWeightStyle.FontStyle, Mode=OneWay}"
+					 FontFamily="{CompiledBinding SelectedFontFamily, Mode=OneWay, Converter={StaticResource StringToFontFamilyConverter}}"
+					 Foreground="{CompiledBinding SelectedForeground, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}">
+			</TextBox>
+		</HeaderedContentControl>
+		<Grid Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="3">
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="10">
+				<Button Classes="ControlButton" Content="Ok" Command="{CompiledBinding OkCommand}" />
+				<Button Classes="ControlButton" Content="Cancel" Command="{CompiledBinding CancelCommand}" Margin="0, 0, 5, 0" />
+			</StackPanel>
+		</Grid>
+	</Grid>
+</Window>

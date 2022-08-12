@@ -16,4 +16,20 @@
         <PackageReference Include="Avalonia.Diagnostics" Version="0.10.17" />
         <PackageReference Include="ThemeEditor.Controls.ColorPicker" Version="0.10.17" />
     </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Dialog.axaml.cs">
+        <DependentUpon>Dialog.axaml</DependentUpon>
+      </Compile>
+      <Compile Update="Properties\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Update="Properties\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
 </Project>

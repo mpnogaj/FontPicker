@@ -25,17 +25,37 @@ namespace AvaloniaFontPickerSample
 			AvaloniaXamlLoader.Load(this);
 		}
 
-		private async void Button_OnClick(object? sender, RoutedEventArgs e)
+		private Font CurrentFont
 		{
-			MainDialog fontDialog = new(new Font
+			get => new()
 			{
 				FontFamily = _sampleBox.FontFamily,
 				FontSize = _sampleBox.FontSize,
 				FontStyle = _sampleBox.FontStyle,
 				FontWeight = _sampleBox.FontWeight,
-				Foreground = (SolidColorBrush)_sampleBox.Foreground!
-			});
-			await fontDialog.ShowDialog(this);
+				Foreground = (SolidColorBrush) _sampleBox.Foreground!
+			};
+			set
+			{
+				_sampleBox.FontFamily = value.FontFamily;
+				_sampleBox.FontSize = value.FontSize;
+				_sampleBox.FontStyle = value.FontStyle;
+				_sampleBox.FontWeight = value.FontWeight;
+				_sampleBox.Foreground = value.Foreground;
+			}
+		}
+
+		private async void Button_OnClick(object? sender, RoutedEventArgs e)
+		{
+			var dialog = new FontPickerDialog()
+			{
+				StartupLocation = WindowStartupLocation.CenterOwner
+			};
+			var res = await dialog.OpenDialog(this, CurrentFont);
+			if (res != null)
+			{
+				CurrentFont = res;
+			}
 		}
 	}
 }

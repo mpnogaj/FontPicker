@@ -4,10 +4,10 @@ namespace AvaloniaFontPicker
 {
     public class Font
     {
-        public FontFamily FontFamily { get; set; } = FontFamily.Default;
-        public FontWeight FontWeight { get; set; } = FontWeight.Normal;
-        public FontStyle FontStyle { get; set; } = FontStyle.Normal;
-        public double FontSize { get; set; } = 12.0;
-        public SolidColorBrush Foreground { get; set; } = new(Colors.Black);
+        public FontFamily FontFamily { get; init; } = FontFamily.Default;
+        public FontWeight FontWeight { get; init; } = FontWeight.Normal;
+        public FontStyle FontStyle { get; init; } = FontStyle.Normal;
+        public double FontSize { get; init; } = 12.0;
+        public SolidColorBrush Foreground { get; init; } = new(Colors.Black);
     }
 }
