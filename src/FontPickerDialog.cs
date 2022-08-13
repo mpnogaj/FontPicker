@@ -3,16 +3,18 @@ using AvaloniaFontPicker.Properties;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 
 namespace AvaloniaFontPicker
 {
+	[PublicAPI]
 	public class FontPickerDialog
 	{
 		public FontPickerDialog() : this(Thread.CurrentThread.CurrentCulture)
 		{
 
 		}
-
+		
 		public FontPickerDialog(CultureInfo cultureInfo)
 		{
 			Resources.Culture = cultureInfo;

@@ -7,16 +7,10 @@ namespace AvaloniaFontPicker
 {
 	internal class ColorToBrushConverter : IValueConverter
 	{
-		public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
-		{
-			var color = (Color)(value ?? throw new ArgumentNullException(nameof(value)));
-			return new SolidColorBrush(color);
-		}
+		public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+			=> new SolidColorBrush((Color)(value ?? throw new ArgumentNullException(nameof(value))));
 
-		public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
-		{
-			var brush = (SolidColorBrush)(value ?? throw new ArgumentNullException(nameof(value)));
-			return brush.Color;
-		}
+		public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
+			=> ((SolidColorBrush)(value ?? throw new ArgumentNullException(nameof(value)))).Color;
 	}
 }

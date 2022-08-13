@@ -174,9 +174,6 @@
   <data name="FontSize" xml:space="preserve">
     <value>Rozmiar</value>
   </data>
-  <data name="123PL" xml:space="preserve">
-    <value>Przykładowy tekst</value>
-  </data>
   <data name="ShowcaseStringHeader" xml:space="preserve">
     <value>Przykładowy tekst</value>
   </data>
