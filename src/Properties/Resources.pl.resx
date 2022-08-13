@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,73 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BlackWeight" xml:space="preserve">
-    <value>Black</value>
-  </data>
-  <data name="BoldWeight" xml:space="preserve">
-    <value>Bold</value>
-  </data>
-  <data name="DemiBoldWeight" xml:space="preserve">
-    <value>Demi bold</value>
-  </data>
-  <data name="ExtraBlackWeight" xml:space="preserve">
-    <value>Extra black</value>
-  </data>
-  <data name="ExtraBoldWeight" xml:space="preserve">
-    <value>Extra bold</value>
-  </data>
-  <data name="ExtraThinWeight" xml:space="preserve">
-    <value>Extra thin</value>
-  </data>
-  <data name="ItalicStyle" xml:space="preserve">
-    <value>Italic</value>
-  </data>
-  <data name="LightWeight" xml:space="preserve">
-    <value>Light</value>
-  </data>
-  <data name="MediumWeight" xml:space="preserve">
-    <value>Medium</value>
-  </data>
-  <data name="NormalStyle" xml:space="preserve">
-    <value>Normal</value>
-  </data>
-  <data name="NormalWeight" xml:space="preserve">
-    <value>Normal</value>
+  <data name="DialogTitle" xml:space="preserve">
+    <value>Wybierz czcionkę</value>
   </data>
   <data name="ObliqueStyle" xml:space="preserve">
-    <value>Oblique</value>
+    <value>Kursywa</value>
   </data>
-  <data name="SemiLightWeight" xml:space="preserve">
-    <value>Semi light</value>
+  <data name="ItalicStyle" xml:space="preserve">
+    <value>Italik</value>
+  </data>
+  <data name="NormalStyle" xml:space="preserve">
+    <value>Normalny</value>
+  </data>
+  <data name="NormalWeight" xml:space="preserve">
+    <value>Normalna</value>
+  </data>
+  <data name="MediumWeight" xml:space="preserve">
+    <value>Średnia</value>
   </data>
   <data name="ThinWeight" xml:space="preserve">
-    <value>Thin</value>
+    <value>Wąska</value>
+  </data>
+  <data name="ExtraThinWeight" xml:space="preserve">
+    <value>Bardzo wąska</value>
+  </data>
+  <data name="LightWeight" xml:space="preserve">
+    <value>Bardzo cienka</value>
+  </data>
+  <data name="SemiLightWeight" xml:space="preserve">
+    <value>Cienka</value>
+  </data>
+  <data name="BoldWeight" xml:space="preserve">
+    <value>Gróba</value>
+  </data>
+  <data name="BlackWeight" xml:space="preserve">
+    <value>Gróbsza</value>
+  </data>
+  <data name="DemiBoldWeight" xml:space="preserve">
+    <value>Pogróbiona</value>
+  </data>
+  <data name="ExtraBoldWeight" xml:space="preserve">
+    <value>Bardzo gróba</value>
+  </data>
+  <data name="ExtraBlackWeight" xml:space="preserve">
+    <value>Najgróbsza</value>
   </data>
   <data name="ShowcaseString" xml:space="preserve">
-    <value>The quick brown fox jumps over the lazy dog</value>
-  </data>
-  <data name="DialogTitle" xml:space="preserve">
-    <value>Pick font</value>
+    <value>Mężny bądź, chroń pułk twój i sześć flag</value>
   </data>
   <data name="FontFamily" xml:space="preserve">
-    <value>Family</value>
+    <value>Rodzina</value>
   </data>
   <data name="FontWeightStyle" xml:space="preserve">
-    <value>Weight - Style</value>
+    <value>Grubość - Styl</value>
   </data>
   <data name="FontSize" xml:space="preserve">
-    <value>Size</value>
+    <value>Rozmiar</value>
+  </data>
+  <data name="123PL" xml:space="preserve">
+    <value>Przykładowy tekst</value>
   </data>
   <data name="ShowcaseStringHeader" xml:space="preserve">
-    <value>Sample text</value>
+    <value>Przykładowy tekst</value>
   </data>
   <data name="FontForeground" xml:space="preserve">
-    <value>Color</value>
+    <value>Kolor</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Anuluj</value>
   </data>
 </root>

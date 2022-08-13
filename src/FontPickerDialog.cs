@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Avalonia.Controls;
+using AvaloniaFontPicker.Properties;
 using System.Globalization;
-using System.Linq;
-using System.Resources;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia.Controls;
-using AvaloniaFontPicker.Properties;
 
 namespace AvaloniaFontPicker
 {

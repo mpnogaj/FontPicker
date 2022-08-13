@@ -72,7 +72,7 @@ namespace AvaloniaFontPicker
 			set => SetValue(value, ref _availableStyles);
 		}
 
-		internal static List<string> FontSizes =>
+		public static List<string> FontSizes =>
 			new() { "8", "9", "10", "11", "12", "13", "14", "16", "18", "20", "24", "26", "28", "36", "48", "72" };
 
 
@@ -184,6 +184,6 @@ namespace AvaloniaFontPicker
 			=> rhs.FontWeight == this.FontWeight && rhs.FontStyle == this.FontStyle;
 
 		public override string ToString()
-			=> $"{FontWeight} - {FontStyle}";
+			=> $"{FontWeight.GetLocalized()} - {FontStyle.GetLocalized()}";
 	}
 }
