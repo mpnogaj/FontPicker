@@ -11,6 +11,12 @@
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     </PropertyGroup>
     <ItemGroup>
+      <None Remove="Assets\FontPickerIcon.ico" />
+    </ItemGroup>
+    <ItemGroup>
+        <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
+    <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.17" />
         <PackageReference Include="Avalonia.Desktop" Version="0.10.17" />
         <PackageReference Include="Avalonia.Diagnostics" Version="0.10.17" />

@@ -2,12 +2,14 @@
 		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-		xmlns:local="clr-namespace:AvaloniaFontPicker"
+		xmlns:local="clr-namespace:FontPicker"
 		xmlns:colorPicker="clr-namespace:ThemeEditor.Controls.ColorPicker;assembly=ThemeEditor.Controls.ColorPicker"
-        xmlns:properties="clr-namespace:AvaloniaFontPicker.Properties;assembly=AvaloniaFontPicker"
+        xmlns:properties="clr-namespace:FontPicker.Properties"
+		xmlns:converters="clr-namespace:FontPicker.Converters"
 		mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="500"
-		x:Class="AvaloniaFontPicker.Dialog"
+		x:Class="FontPicker.Dialog"
 		x:DataType="local:Dialog"
+        Icon="/Assets/FontPickerIcon.ico"
 		Title="Select Font"
 		Height="510"
 		Width="600"
@@ -15,8 +17,8 @@
 		WindowStartupLocation="CenterOwner"
 		ShowActivated="True">
 	<Window.Resources>
-		<local:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
-		<local:StringToFontFamilyConverter x:Key="StringToFontFamilyConverter"/>
+		<converters:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+		<converters:StringToFontFamilyConverter x:Key="StringToFontFamilyConverter"/>
 	</Window.Resources>
 
 	<Window.Styles>

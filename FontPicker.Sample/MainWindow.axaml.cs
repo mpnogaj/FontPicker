@@ -3,9 +3,8 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using AvaloniaFontPicker;
 
-namespace AvaloniaFontPickerSample
+namespace FontPicker.Sample
 {
 	public partial class MainWindow : Window
 	{
@@ -33,7 +32,7 @@ namespace AvaloniaFontPickerSample
 				FontSize = _sampleBox.FontSize,
 				FontStyle = _sampleBox.FontStyle,
 				FontWeight = _sampleBox.FontWeight,
-				Foreground = (SolidColorBrush) _sampleBox.Foreground!
+				Foreground = (SolidColorBrush)_sampleBox.Foreground!
 			};
 			set
 			{
