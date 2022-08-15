@@ -4,11 +4,21 @@
         <Nullable>enable</Nullable>
         <PackageId>FontPickerAvalonia</PackageId>
         <Authors>mpnogaj</Authors>
-        <Product>FontPickerAvalonia</Product>
+        <Product>FontPicker</Product>
         <PackageTags>avalonia;font-picker;font;picker</PackageTags>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+        <Title>FontPicker</Title>
+        <Description>Simple font picker dialog for Avalonia</Description>
+        <PackageIcon>FontPickerPackageIcon.png</PackageIcon>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/mpnogaj/FontPicker</RepositoryUrl>
+        <PackageOutputPath>$(OutputPath)$("\Nuget")</PackageOutputPath>
+        <NeutralLanguage>en</NeutralLanguage>
+        <AssemblyVersion>0.10.18</AssemblyVersion>
+        <FileVersion>0.10.18</FileVersion>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
     </PropertyGroup>
     <ItemGroup>
       <None Remove="Assets\FontPickerIcon.ico" />
@@ -17,9 +27,15 @@
         <AvaloniaResource Include="Assets\**" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.17" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.17" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.17" />
+      <None Include="..\README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Avalonia" Version="0.10.18" />
+        <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
+        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.18" />
         <PackageReference Include="ThemeEditor.Controls.ColorPicker" Version="0.10.17" />
     </ItemGroup>
     <ItemGroup>
@@ -37,5 +53,11 @@
         <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <None Update="Assets\FontPickerPackageIcon.png">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
     </ItemGroup>
 </Project>
