@@ -10,6 +10,6 @@
       <PackageReference Include="Avalonia.Diagnostics" Version="0.10.17" />
     </ItemGroup>
     <ItemGroup>
-      <ProjectReference Include="..\FontPickerDialog\FontPicker.csproj" />
+      <ProjectReference Include="..\FontPicker\FontPicker.csproj" />
     </ItemGroup>
 </Project>
