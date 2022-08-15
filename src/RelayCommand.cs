@@ -24,8 +24,8 @@ namespace AvaloniaFontPicker
 
 		public event EventHandler? CanExecuteChanged
 		{
-			add => throw new NotSupportedException();
-			remove => throw new NotSupportedException();
+			add { }
+			remove { }
 		}
 	}
 }
