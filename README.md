@@ -7,9 +7,9 @@ FontPicker is an font picker dialog for [Avalonia](https://github.com/AvaloniaUI
 
 FontPicker is delivered as a NuGet package.
 
-You can find the packages here  TODO and install the package like this:
+You can find the packages [here](https://www.nuget.org/packages/FontPickerAvalonia) and install the package like this:
 
-`Install-Package [TODO]`
+`Install-Package FontPickerAvalonia`
 
 ## Usage
 
@@ -19,4 +19,4 @@ For usage instructions check the sample project
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-TODO
+[MIT](https://github.com/mpnogaj/FontPicker/blob/master/LICENSE.MD)
