@@ -39,6 +39,7 @@
         <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview1" />
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview1" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview1" />
+        <PackageReference Condition="'$(Configuration)' == 'Release'" Include="Avalonia.Controls.ColorPicker" Version="11.0.0-preview1"/>
     </ItemGroup>
     <ItemGroup>
       <Compile Update="Dialog.axaml.cs">
