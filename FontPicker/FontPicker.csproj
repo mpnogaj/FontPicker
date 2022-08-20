@@ -19,14 +19,14 @@
         <AssemblyVersion>0.10.18</AssemblyVersion>
         <FileVersion>0.10.18</FileVersion>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <Version>0.10.18</Version>
+        <Version>11.0.0-preview1</Version>
         <PackageProjectUrl>https://github.com/mpnogaj/FontPicker</PackageProjectUrl>
     </PropertyGroup>
     <ItemGroup>
         <AvaloniaResource Include="Assets\FontPickerIcon.ico" />
     </ItemGroup>
     <ItemGroup>
-        <None Include="Assets\FontPickerPackageIcon.png" Pack="true" PackagePath="\"/>
+        <None Include="Assets\FontPickerPackageIcon.png" Pack="true" PackagePath="\" />
     </ItemGroup>
     <ItemGroup>
       <None Include="..\README.md">
@@ -35,10 +35,11 @@
       </None>
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="0.10.18" />
-        <PackageReference Include="Avalonia.Desktop" Version="0.10.18" />
-        <PackageReference Include="Avalonia.Diagnostics" Version="0.10.18" />
-        <PackageReference Include="ThemeEditor.Controls.ColorPicker" Version="0.10.17" />
+        <PackageReference Include="Avalonia" Version="11.0.0-preview1" />
+        <PackageReference Include="Avalonia.Controls.ColorPicker" Version="11.0.0-preview1" />
+        <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview1" />
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview1" />
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview1" />
     </ItemGroup>
     <ItemGroup>
       <Compile Update="Dialog.axaml.cs">

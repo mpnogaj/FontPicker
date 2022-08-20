@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Avalonia;
 using JetBrains.Annotations;
 
 namespace FontPicker;
@@ -31,10 +32,10 @@ internal sealed class Dialog : Window, INotifyPropertyChanged
 	public Dialog(string showcaseString, Font? font = null)
 	{
 		InitializeComponent();
-		ShowcaseString = showcaseString;
 		CurrentFont = font ?? new Font();
-		InstalledFonts = FontManager.Current.GetInstalledFontFamilyNames().OrderBy(x => x).ToList();
 		SelectedForeground = CurrentFont.Foreground.Color;
+		ShowcaseString = showcaseString;
+		InstalledFonts = FontManager.Current.GetInstalledFontFamilyNames().OrderBy(x => x).ToList();
 		if (CurrentFont != new Font())
 		{
 			SelectedFontFamily = InstalledFonts.Find(x => x == CurrentFont.FontFamily.Name) ??
@@ -50,6 +51,10 @@ internal sealed class Dialog : Window, INotifyPropertyChanged
 			UpdateFontWeightStyles(SelectedFontFamily, new FontWeightStyle(FontWeight.Normal, FontStyle.Normal));
 			SelectedFontSize = FontSizes[4];
 		}
+
+#if DEBUG
+		this.AttachDevTools();
+#endif
 
 		DataContext = this;
 	}
@@ -135,7 +140,6 @@ internal sealed class Dialog : Window, INotifyPropertyChanged
 			var typeface = new Typeface(skTypeface.FamilyName, skTypeface.FontSlant.ToAvalonia(), fontWeight);
 			availableStyles.Add(new FontWeightStyle(typeface.Weight, typeface.Style));
 		}
-
 		AvailableStyles = availableStyles.ToList();
 		SelectedFontWeightStyle = availableStyles.Contains(currentFontWeightStyle)
 			? currentFontWeightStyle
