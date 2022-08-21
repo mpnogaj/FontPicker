@@ -32,6 +32,11 @@ internal sealed class Dialog : Window, INotifyPropertyChanged
 	public Dialog(string showcaseString, Font? font = null)
 	{
 		InitializeComponent();
+#if DEBUG
+		this.AttachDevTools();
+#endif
+
+		ShowcaseString = showcaseString;
 		CurrentFont = font ?? new Font();
 		SelectedForeground = CurrentFont.Foreground.Color;
 		ShowcaseString = showcaseString;
