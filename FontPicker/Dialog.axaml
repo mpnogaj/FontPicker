@@ -107,9 +107,6 @@
 				<TextBox DockPanel.Dock="Top" 
 						 Text="{CompiledBinding SelectedFontSize, Mode=TwoWay}" 
                          CornerRadius="0"/>
-                <Separator DockPanel.Dock="Top" 
-                           Height="1"
-                           Background="Black"/>
 				<ListBox DockPanel.Dock="Bottom"
 						 SelectionMode="Single" 
 						 Items="{x:Static local:Dialog.FontSizes}"
@@ -122,7 +119,7 @@
 								Header="{x:Static properties:Resources.FontForeground}" 
 								Background="Black">
 			<ColorPicker Width="330"
-						 Height="32"
+						 Height="40"
 						 HsvColor="{CompiledBinding SelectedForeground, Converter={StaticResource ColorToHsvColorConverter}, Mode=OneTime}"
 						 Color="{CompiledBinding SelectedForeground, Mode=TwoWay}">
 			</ColorPicker>
