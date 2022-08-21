@@ -70,7 +70,8 @@
                             <TextBlock Text="{TemplateBinding Header}"/>
 							<Border Grid.Row="1"
 									BorderBrush="{TemplateBinding Background}"
-									BorderThickness="1">
+									BorderThickness="1"
+									Padding="1">
 								<ContentPresenter Content="{TemplateBinding Content}" />
 							</Border>
 						</Grid>
@@ -103,16 +104,12 @@
 								Header="{x:Static properties:Resources.FontSize}" 
 								Background="Black"> 
 			<DockPanel LastChildFill="True">
-                <DockPanel.Styles>
-					<Style Selector="TextBox /template/ Border">
-                        <Setter Property="CornerRadius" Value="0"/>
-                        <Setter Property="Background" Value="Red"/>
-					</Style>
-				</DockPanel.Styles>
 				<TextBox DockPanel.Dock="Top" 
 						 Text="{CompiledBinding SelectedFontSize, Mode=TwoWay}" 
-						 Margin="0, 0, 0, 3"/>
-                <Separator DockPanel.Dock="Top" Height="1"/>
+                         CornerRadius="0"/>
+                <Separator DockPanel.Dock="Top" 
+                           Height="1"
+                           Background="Black"/>
 				<ListBox DockPanel.Dock="Bottom"
 						 SelectionMode="Single" 
 						 Items="{x:Static local:Dialog.FontSizes}"
@@ -136,6 +133,7 @@
 								Header="{x:Static properties:Resources.ShowcaseStringHeader}"
 								Background="Black">
 			<TextBox Text="{CompiledBinding ShowcaseString, Mode=OneWay}"
+                     BorderThickness="0"
 					 Name="PreviewBox"
 					 FontSize="{CompiledBinding SelectedFontSize, Mode=OneWay}"
 					 FontWeight="{CompiledBinding SelectedFontWeightStyle.FontWeight, Mode=OneWay}"
