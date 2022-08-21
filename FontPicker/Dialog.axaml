@@ -4,12 +4,12 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:FontPicker"
 		xmlns:colorPicker="clr-namespace:ThemeEditor.Controls.ColorPicker;assembly=ThemeEditor.Controls.ColorPicker"
-        xmlns:properties="clr-namespace:FontPicker.Properties"
+		xmlns:properties="clr-namespace:FontPicker.Properties"
 		xmlns:converters="clr-namespace:FontPicker.Converters"
 		mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="500"
 		x:Class="FontPicker.Dialog"
 		x:DataType="local:Dialog"
-        Icon="/Assets/FontPickerIcon.ico"
+		Icon="/Assets/FontPickerIcon.ico"
 		Title="Select Font"
 		Height="510"
 		Width="600"
@@ -31,19 +31,14 @@
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate>
-						<Border>
-							<Grid RowDefinitions="Auto,*">
-								<ContentPresenter TextBlock.FontWeight="Bold" 
-								                  Content="{TemplateBinding Header}" />
-								<Border Grid.Row="1"
-										BorderBrush="{TemplateBinding Background}"
-										BorderThickness="2"
-										CornerRadius="5"
-										Padding="5">
-									<ContentPresenter Content="{TemplateBinding Content}" />
-								</Border>
-							</Grid>
-						</Border>
+						<Grid RowDefinitions="Auto,*">
+                            <TextBlock Text="{TemplateBinding Header}"/>
+							<Border Grid.Row="1"
+									BorderBrush="{TemplateBinding Background}"
+									BorderThickness="1">
+								<ContentPresenter Content="{TemplateBinding Content}" />
+							</Border>
+						</Grid>
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
@@ -51,41 +46,49 @@
 	</Window.Styles>
 
 	<Grid ColumnDefinitions="2*,2*,*" 
-	      RowDefinitions="3*, *, 2*,50" 
-	      Margin="5">
-		<HeaderedContentControl Grid.Column="0" 
-		                        Grid.Row="0" 
-		                        Grid.RowSpan="3" 
-                                Header="{x:Static properties:Resources.FontFamily}"
-		                        Background="Black">
-			<ListBox Items="{CompiledBinding InstalledFonts}" 
-			         SelectedItem="{CompiledBinding SelectedFontFamily}" />
+		  RowDefinitions="3*, *, 2*,50" 
+		  Margin="5">
+		<HeaderedContentControl Grid.Row="0"
+								Grid.Column="0"
+								Grid.RowSpan="3"
+								Header="{x:Static properties:Resources.FontFamily}"
+								Background="Black">
+			<ListBox Items="{CompiledBinding InstalledFonts}"
+					 SelectedItem="{CompiledBinding SelectedFontFamily}"/>
 		</HeaderedContentControl>
 		<HeaderedContentControl Grid.Column="1" 
-		                        Grid.Row="0" 
-		                        Header="{x:Static properties:Resources.FontWeightStyle}" 
-		                        Background="Black">
+								Grid.Row="0" 
+								Header="{x:Static properties:Resources.FontWeightStyle}" 
+								Background="Black">
 			<ListBox Items="{CompiledBinding AvailableStyles}" 
 					 SelectedItem="{CompiledBinding SelectedFontWeightStyle, Mode=TwoWay}"/>
 		</HeaderedContentControl>
 		<HeaderedContentControl Grid.Column="2" 
-		                        Grid.Row="0" 
-		                        Header="{x:Static properties:Resources.FontSize}" 
-		                        Background="Black">
+								Grid.Row="0" 
+								Header="{x:Static properties:Resources.FontSize}" 
+								Background="Black"> 
 			<DockPanel LastChildFill="True">
-				<TextBox DockPanel.Dock="Bottom" 
-				         Text="{CompiledBinding SelectedFontSize, Mode=TwoWay}" 
-				         Margin="0, 5, 0, 0" />
-				<ListBox SelectionMode="Single" 
-				         Items="{x:Static local:Dialog.FontSizes}"
-						 SelectedItem="{CompiledBinding SelectedFontSize, Mode=TwoWay}" DockPanel.Dock="Top" />
+                <DockPanel.Styles>
+					<Style Selector="TextBox /template/ Border">
+                        <Setter Property="CornerRadius" Value="0"/>
+                        <Setter Property="Background" Value="Red"/>
+					</Style>
+				</DockPanel.Styles>
+				<TextBox DockPanel.Dock="Top" 
+						 Text="{CompiledBinding SelectedFontSize, Mode=TwoWay}" 
+						 Margin="0, 0, 0, 3"/>
+                <Separator DockPanel.Dock="Top" Height="1"/>
+				<ListBox DockPanel.Dock="Bottom"
+						 SelectionMode="Single" 
+						 Items="{x:Static local:Dialog.FontSizes}"
+						 SelectedItem="{CompiledBinding SelectedFontSize, Mode=TwoWay}" />
 			</DockPanel>
 		</HeaderedContentControl>
 		<HeaderedContentControl Grid.Column="1"
-		                        Grid.ColumnSpan="2" 
-		                        Grid.Row="1" 
-		                        Header="{x:Static properties:Resources.FontForeground}" 
-		                        Background="Black">
+								Grid.ColumnSpan="2" 
+								Grid.Row="1" 
+								Header="{x:Static properties:Resources.FontForeground}" 
+								Background="Black">
 			<Grid RowDefinitions="Auto" ColumnDefinitions="*">
 				<Grid Grid.Row="0" Margin="2">
 					<ToggleButton Name="PopupButton" BorderThickness="0" Padding="0" Height="30"
@@ -128,9 +131,9 @@
 			</Grid>
 		</HeaderedContentControl>
 		<HeaderedContentControl Grid.Column="1" 
-		                        Grid.ColumnSpan="2"
-		                        Grid.Row="2" 
-                                Header="{x:Static properties:Resources.ShowcaseStringHeader}"
+								Grid.ColumnSpan="2"
+								Grid.Row="2" 
+								Header="{x:Static properties:Resources.ShowcaseStringHeader}"
 								Background="Black">
 			<TextBox Text="{CompiledBinding ShowcaseString, Mode=OneWay}"
 					 Name="PreviewBox"
@@ -143,18 +146,18 @@
 			</TextBox>
 		</HeaderedContentControl>
 		<Grid Grid.Column="0" 
-		      Grid.Row="3" 
-		      Grid.ColumnSpan="3">
+			  Grid.Row="3" 
+			  Grid.ColumnSpan="3">
 			<StackPanel Orientation="Horizontal" 
-			            HorizontalAlignment="Right" 
-			            Spacing="10">
+						HorizontalAlignment="Right" 
+						Spacing="10">
 				<Button Classes="ControlButton"
-                        Content="{x:Static properties:Resources.Ok}"
-				        Command="{CompiledBinding OkCommand}" />
+						Content="{x:Static properties:Resources.Ok}"
+						Command="{CompiledBinding OkCommand}" />
 				<Button Classes="ControlButton"
-				        Content="{x:Static properties:Resources.Cancel}"
-				        Command="{CompiledBinding CancelCommand}" 
-				        Margin="0, 0, 5, 0" />
+						Content="{x:Static properties:Resources.Cancel}"
+						Command="{CompiledBinding CancelCommand}" 
+						Margin="0, 0, 5, 0" />
 			</StackPanel>
 		</Grid>
 	</Grid>

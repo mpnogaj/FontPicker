@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Avalonia;
 using JetBrains.Annotations;
 
 namespace FontPicker;
@@ -31,6 +32,10 @@ internal sealed class Dialog : Window, INotifyPropertyChanged
 	public Dialog(string showcaseString, Font? font = null)
 	{
 		InitializeComponent();
+#if DEBUG
+		this.AttachDevTools();
+#endif
+
 		ShowcaseString = showcaseString;
 		CurrentFont = font ?? new Font();
 		InstalledFonts = FontManager.Current.GetInstalledFontFamilyNames().OrderBy(x => x).ToList();
