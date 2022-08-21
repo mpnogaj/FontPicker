@@ -72,9 +72,6 @@
 				<TextBox DockPanel.Dock="Top" 
 						 Text="{CompiledBinding SelectedFontSize, Mode=TwoWay}" 
                          CornerRadius="0"/>
-                <Separator DockPanel.Dock="Top" 
-                           Height="1"
-                           Background="Black"/>
 				<ListBox DockPanel.Dock="Bottom"
 						 SelectionMode="Single" 
 						 Items="{x:Static local:Dialog.FontSizes}"
