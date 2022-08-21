@@ -35,7 +35,8 @@
                             <TextBlock Text="{TemplateBinding Header}"/>
 							<Border Grid.Row="1"
 									BorderBrush="{TemplateBinding Background}"
-									BorderThickness="1">
+									BorderThickness="1"
+									Padding="1">
 								<ContentPresenter Content="{TemplateBinding Content}" />
 							</Border>
 						</Grid>
@@ -68,16 +69,12 @@
 								Header="{x:Static properties:Resources.FontSize}" 
 								Background="Black"> 
 			<DockPanel LastChildFill="True">
-                <DockPanel.Styles>
-					<Style Selector="TextBox /template/ Border">
-                        <Setter Property="CornerRadius" Value="0"/>
-                        <Setter Property="Background" Value="Red"/>
-					</Style>
-				</DockPanel.Styles>
 				<TextBox DockPanel.Dock="Top" 
 						 Text="{CompiledBinding SelectedFontSize, Mode=TwoWay}" 
-						 Margin="0, 0, 0, 3"/>
-                <Separator DockPanel.Dock="Top" Height="1"/>
+                         CornerRadius="0"/>
+                <Separator DockPanel.Dock="Top" 
+                           Height="1"
+                           Background="Black"/>
 				<ListBox DockPanel.Dock="Bottom"
 						 SelectionMode="Single" 
 						 Items="{x:Static local:Dialog.FontSizes}"
@@ -89,45 +86,51 @@
 								Grid.Row="1" 
 								Header="{x:Static properties:Resources.FontForeground}" 
 								Background="Black">
-			<Grid RowDefinitions="Auto" ColumnDefinitions="*">
-				<Grid Grid.Row="0" Margin="2">
-					<ToggleButton Name="PopupButton" BorderThickness="0" Padding="0" Height="30"
-								  HorizontalAlignment="Stretch" VerticalAlignment="Top"
-								  HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
-						<ToggleButton.Styles>
-							<Style Selector="ToggleButton">
-								<Setter Property="RenderTransform" Value="none" />
-								<Setter Property="Transitions" Value="{x:Null}" />
-							</Style>
-							<Style Selector="ToggleButton:pressed">
-								<Setter Property="RenderTransform" Value="none" />
-							</Style>
-							<Style
-								Selector="ToggleButton:checked /template/ ContentPresenter, ToggleButton:pressed /template/ ContentPresenter">
-								<Setter Property="Background"
-										Value="{CompiledBinding SelectedForeground, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
-							</Style>
-							<Style Selector="ToggleButton:checked /template/ ContentPresenter">
-								<Setter Property="BorderBrush"
-										Value="{CompiledBinding SelectedForeground, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
-							</Style>
-						</ToggleButton.Styles>
-						<Panel Height="30" DockPanel.Dock="Top">
-							<Border BorderThickness="0" CornerRadius="0" />
-							<Border BorderThickness="0" CornerRadius="0" />
-							<Border BorderThickness="0" CornerRadius="0" 
-									Background="{CompiledBinding SelectedForeground, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
-						</Panel>
-					</ToggleButton>
-					<Popup IsOpen="{Binding #PopupButton.IsChecked, Mode=TwoWay}" IsLightDismissEnabled="True"
-						   PlacementMode="Pointer">
-						<Border Background="LightGray" CornerRadius="0">
-							<colorPicker:ColorPicker
-								Color="{CompiledBinding SelectedForeground, Mode=TwoWay}"
-								Margin="8" />
-						</Border>
-					</Popup>
-				</Grid>
+			<Grid RowDefinitions="*" ColumnDefinitions="*">
+				<ToggleButton Name="PopupButton" 
+                              Grid.Row="0"
+                              Grid.Column="0"
+				              BorderThickness="0" 
+				              Padding="0"
+                              Margin="5"
+							  HorizontalAlignment="Stretch" 
+				              VerticalAlignment="Stretch"
+							  HorizontalContentAlignment="Stretch"
+				              VerticalContentAlignment="Stretch">
+					<ToggleButton.Styles>
+						<Style Selector="ToggleButton">
+							<Setter Property="RenderTransform" Value="none" />
+							<Setter Property="Transitions" Value="{x:Null}" />
+						</Style>
+						<Style Selector="ToggleButton:pressed">
+							<Setter Property="RenderTransform" Value="none" />
+						</Style>
+						<Style
+							Selector="ToggleButton:checked /template/ ContentPresenter, ToggleButton:pressed /template/ ContentPresenter">
+							<Setter Property="Background"
+									Value="{CompiledBinding SelectedForeground, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
+						</Style>
+						<Style Selector="ToggleButton:checked /template/ ContentPresenter">
+							<Setter Property="BorderBrush"
+									Value="{CompiledBinding SelectedForeground, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
+						</Style>
+					</ToggleButton.Styles>
+					<Panel DockPanel.Dock="Top"
+					       VerticalAlignment="Stretch">
+						<Border BorderThickness="0" CornerRadius="0" />
+						<Border BorderThickness="0" CornerRadius="0" />
+						<Border BorderThickness="0" CornerRadius="0" 
+								Background="{CompiledBinding SelectedForeground, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"/>
+					</Panel>
+				</ToggleButton>
+				<Popup IsOpen="{Binding #PopupButton.IsChecked, Mode=TwoWay}" IsLightDismissEnabled="True"
+					   PlacementMode="Pointer">
+					<Border Background="LightGray" CornerRadius="0">
+						<colorPicker:ColorPicker
+							Color="{CompiledBinding SelectedForeground, Mode=TwoWay}"
+							Margin="8" />
+					</Border>
+				</Popup>
 			</Grid>
 		</HeaderedContentControl>
 		<HeaderedContentControl Grid.Column="1" 
@@ -136,6 +139,7 @@
 								Header="{x:Static properties:Resources.ShowcaseStringHeader}"
 								Background="Black">
 			<TextBox Text="{CompiledBinding ShowcaseString, Mode=OneWay}"
+                     BorderThickness="0"
 					 Name="PreviewBox"
 					 TextWrapping="Wrap"
 					 FontSize="{CompiledBinding SelectedFontSize, Mode=OneWay}"
