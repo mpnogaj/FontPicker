@@ -19,7 +19,7 @@
         <AssemblyVersion>0.10.18</AssemblyVersion>
         <FileVersion>0.10.18</FileVersion>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <Version>11.0.0-preview1</Version>
+        <Version>11.0.0.1-preview1</Version>
         <PackageProjectUrl>https://github.com/mpnogaj/FontPicker</PackageProjectUrl>
     </PropertyGroup>
     <ItemGroup>
@@ -39,7 +39,7 @@
         <PackageReference Include="Avalonia.Desktop" Version="11.0.0-preview1" />
         <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0-preview1" />
         <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0-preview1" />
-        <PackageReference Condition="'$(Configuration)' == 'Release'" Include="Avalonia.Controls.ColorPicker" Version="11.0.0-preview1"/>
+        <PackageReference Condition="'$(Configuration)' == 'Release'" Include="Avalonia.Controls.ColorPicker" Version="11.0.0-preview1" />
     </ItemGroup>
     <ItemGroup>
       <Compile Update="Dialog.axaml.cs">
